@@ -1,0 +1,29 @@
+Team members:
+Soham Aurangabadkar
+Kapil Deshpande
+Krinal Tanna
+
+High Level Approach:
+DNS Server:
+1. Create a UDP Socket
+2. Accept a dig requet from a client, unpack the question from the query
+3. If the question is appropriate, construct a packet with a response as the IP Address of a random EC2 server
+4. Send the constructed packet back to the client
+
+HTTP Server:
+1. Create an instance of a BaseHTTPServer
+2. Make an HTTP socket that listens forever
+3. Accept a GET request from the client, and extract the resource
+4. Isolate the filename from the resource, and check for local existence
+5. If the file exists locally, record a cache hit and return the contents of the local file to the client
+6. If the file does not exist, record a cache miss, and redirect the request to the origin EC2 server (ec2-54-85-79-138.compute-1.amazonaws.com)
+7. If the file does not exist over there either, send a 404 NOT FOUND message to the client
+8. If the file exists, store a copy of the file locally and send the file to the client
+
+Performance Enhancing Techniques:
+Implemented a local cache that avoids redirection to the origin server
+
+Challenges:
+1. Understanding the requirements
+2. Maintaining the cache
+3. Testing the code
